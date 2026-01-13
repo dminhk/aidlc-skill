@@ -50,15 +50,11 @@ AI-DLC guides you through a complete software development lifecycle with three p
 Add the marketplace and install in Claude Code:
 
 ```
-/plugin marketplace add dminhk/aidlc-skill
-/plugin install aidlc@dminhk
+/plugin marketplace add https://github.com/dminhk/aidlc-skill.git
+/plugin install aidlc@aidlc-skill
 ```
 
-Or use the interactive plugin browser:
-```
-/plugin
-```
-Then navigate to **Discover** tab, search for "aidlc", and press Enter to install.
+Restart Claude Code after installation to load the skill.
 
 ### Option 2: Clone Repository
 
