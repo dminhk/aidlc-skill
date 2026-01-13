@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "aidlc-skill",
+  "description": "AI-Driven Development Life Cycle skill for Claude Code",
+  "owner": {
+    "name": "David Min",
+    "email": "dminhk@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "aidlc",
+      "description": "AI-Driven Development Life Cycle - Adaptive software development workflow for building applications. Use when users request software development, new features, bug fixes, refactoring, or any coding task.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./aidlc"
+      ]
+    }
+  ]
+}
