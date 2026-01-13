@@ -45,26 +45,50 @@ AI-DLC guides you through a complete software development lifecycle with three p
 
 ## Installation
 
-### Option 1: Clone Repository
+### Option 1: Plugin Marketplace (Recommended)
+
+Add the marketplace and install in Claude Code:
+
+```
+/plugin marketplace add dminhk/aidlc-skill
+/plugin install aidlc@dminhk
+```
+
+Or use the interactive plugin browser:
+```
+/plugin
+```
+Then navigate to **Discover** tab, search for "aidlc", and press Enter to install.
+
+### Option 2: Clone Repository
 
 ```bash
 # Clone the repository
 git clone https://github.com/dminhk/aidlc-skill.git
 
-# Copy to global skills directory
+# Copy to global skills directory (available for all projects)
 cp -r aidlc-skill/aidlc ~/.claude/skills/
 
-# Or copy to project-specific location
+# Or copy to project-specific location (shared via version control)
 cp -r aidlc-skill/aidlc .claude/skills/
 ```
 
-### Option 2: Download Release
+### Option 3: Download Release
 
 1. Download `aidlc.skill` from the [Releases](https://github.com/dminhk/aidlc-skill/releases) page
 2. Extract to your skills directory:
    ```bash
    unzip aidlc.skill -d ~/.claude/skills/
    ```
+
+### Verify Installation
+
+Ask Claude Code:
+```
+What skills are available?
+```
+
+You should see "aidlc" listed with its description.
 
 ## Usage
 
