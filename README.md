@@ -103,6 +103,73 @@ The skill will automatically:
 4. Guide you through design and code generation
 5. Produce build and test instructions
 
+## Explicit Stage Commands
+
+You can explicitly trigger specific stages to re-run phases, force skipped stages, or generate missing documentation.
+
+### Basic Commands
+
+| Command | Description |
+|---------|-------------|
+| `/aidlc` | Start or resume workflow |
+| `/aidlc continue` | Resume from current state |
+| `/aidlc status` | Show current progress |
+
+### Phase Commands
+
+Run or re-run entire phases:
+
+```
+/aidlc run inception              # Run/re-run inception phase
+/aidlc run construction           # Run/re-run construction phase
+/aidlc run construction with full documentation  # Force all docs
+```
+
+### Individual Stage Commands
+
+**Inception Phase:**
+
+```
+/aidlc run workspace detection
+/aidlc run reverse engineering
+/aidlc run requirements analysis
+/aidlc run user stories
+/aidlc run workflow planning
+/aidlc run application design
+/aidlc run units generation
+```
+
+**Construction Phase:**
+
+```
+/aidlc run functional design [for unit X]
+/aidlc run nfr requirements [for unit X]
+/aidlc run nfr design [for unit X]
+/aidlc run infrastructure design [for unit X]
+/aidlc run code generation [for unit X]
+/aidlc run build and test
+```
+
+### Documentation Commands
+
+Generate missing or additional documentation:
+
+```
+/aidlc generate missing documentation
+/aidlc create construction docs
+/aidlc create build-and-test summary
+```
+
+### Control Commands
+
+Fine-tune workflow execution:
+
+| Command | Description |
+|---------|-------------|
+| `/aidlc skip [stage name]` | Skip a specific stage |
+| `/aidlc include [stage name]` | Force include a stage |
+| `/aidlc reset [phase]` | Reset phase status in state file |
+
 ## Generated Documentation Structure
 
 ```
