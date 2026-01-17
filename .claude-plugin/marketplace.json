@@ -15,6 +15,15 @@
       "skills": [
         "./aidlc"
       ]
+    },
+    {
+      "name": "aidlc-agile",
+      "description": "AI-DLC Agile Variant - Extended development workflow with Vision Stage, Epic Stage, Product Backlog management, and optional Jira MCP integration. Use for multi-stakeholder projects, agile practices, or complex initiatives requiring vision alignment and epic-based planning.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./aidlc-agile"
+      ]
     }
   ]
 }

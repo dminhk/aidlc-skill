@@ -4,11 +4,18 @@ A structured, adaptive workflow for AI-assisted software development.
 
 > **Based on**: [AI-DLC Workflows](https://github.com/awslabs/aidlc-workflows) by AWS Labs
 
+## Skill Variants
+
+| Skill | Description | Use When |
+|-------|-------------|----------|
+| **aidlc** | Base workflow | General software development tasks |
+| **aidlc-agile** | Agile variant with Vision, Epic, Backlog, Jira | Multi-stakeholder projects, agile practices |
+
 ## Supported Platforms
 
 | Platform | Type | Installation |
 |----------|------|--------------|
-| [Claude Code](https://claude.ai/claude-code) | CLI | Skill (`/aidlc`) |
+| [Claude Code](https://claude.ai/claude-code) | CLI | Skill (`/aidlc` or `/aidlc-agile`) |
 | [Kiro IDE](https://kiro.dev) | IDE | Steering files |
 | [Kiro CLI](https://kiro.dev/docs/cli) | CLI | Steering files |
 
@@ -59,9 +66,16 @@ AI-DLC guides you through a complete software development lifecycle with three p
 
 #### Option 1: Plugin Marketplace (Recommended)
 
+**Base workflow:**
 ```
 /plugin marketplace add https://github.com/dminhk/aidlc-skill.git
 /plugin install aidlc@aidlc-skill
+```
+
+**Agile variant (includes Vision, Epic, Backlog, Jira integration):**
+```
+/plugin marketplace add https://github.com/dminhk/aidlc-skill.git
+/plugin install aidlc-agile@aidlc-skill
 ```
 
 Restart Claude Code after installation to load the skill.
@@ -73,9 +87,11 @@ git clone https://github.com/dminhk/aidlc-skill.git
 
 # Global installation (all projects)
 cp -r aidlc-skill/aidlc ~/.claude/skills/
+cp -r aidlc-skill/aidlc-agile ~/.claude/skills/  # Optional: Agile variant
 
 # Or project-specific (shared via version control)
 cp -r aidlc-skill/aidlc .claude/skills/
+cp -r aidlc-skill/aidlc-agile .claude/skills/  # Optional: Agile variant
 ```
 
 #### Verify Installation
@@ -84,7 +100,29 @@ cp -r aidlc-skill/aidlc .claude/skills/
 What skills are available?
 ```
 
-You should see "aidlc" listed with its description.
+You should see "aidlc" and/or "aidlc-agile" listed with their descriptions.
+
+#### Plugin Configuration
+
+The `.claude-plugin/marketplace.json` file defines the available plugins:
+
+```json
+{
+  "name": "aidlc-skill",
+  "plugins": [
+    {
+      "name": "aidlc",
+      "skills": ["./aidlc"]
+    },
+    {
+      "name": "aidlc-agile",
+      "skills": ["./aidlc-agile"]
+    }
+  ]
+}
+```
+
+Each plugin maps to a skill directory containing a `SKILL.md` that defines the skill's name, description, and workflow rules.
 
 ---
 
@@ -92,6 +130,7 @@ You should see "aidlc" listed with its description.
 
 #### Option 1: Clone Repository
 
+**Base workflow:**
 ```bash
 git clone https://github.com/dminhk/aidlc-skill.git
 
@@ -104,8 +143,22 @@ cp -r aidlc-skill/kiro/aidlc-rules ~/.kiro/steering/
 cp -r aidlc-skill/kiro/aidlc-rule-details ~/.kiro/
 ```
 
+**Agile variant (includes Vision, Epic, Backlog, Jira integration):**
+```bash
+git clone https://github.com/dminhk/aidlc-skill.git
+
+# Project-specific installation
+cp -r aidlc-skill/kiro/aidlc-agile-rules <your-project>/.kiro/steering/
+cp -r aidlc-skill/kiro/aidlc-agile-rule-details <your-project>/.kiro/
+
+# Or global installation (all projects)
+cp -r aidlc-skill/kiro/aidlc-agile-rules ~/.kiro/steering/
+cp -r aidlc-skill/kiro/aidlc-agile-rule-details ~/.kiro/
+```
+
 #### Resulting Structure
 
+**Base workflow:**
 ```
 <your-project>/
 └── .kiro/
@@ -119,6 +172,25 @@ cp -r aidlc-skill/kiro/aidlc-rule-details ~/.kiro/
         └── operations/
 ```
 
+**Agile variant:**
+```
+<your-project>/
+└── .kiro/
+    ├── steering/
+    │   └── aidlc-agile-rules/
+    │       └── core-workflow.md
+    └── aidlc-agile-rule-details/
+        ├── common/
+        ├── inception/
+        │   ├── vision-stage.md
+        │   ├── epic-stage.md
+        │   └── backlog-management.md
+        ├── integrations/
+        │   └── jira-integration.md
+        ├── construction/
+        └── operations/
+```
+
 #### Verify Installation
 
 In Kiro CLI:
@@ -127,7 +199,7 @@ In Kiro CLI:
 /context show
 ```
 
-Look for entries under `.kiro/steering/aidlc-rules/`.
+Look for entries under `.kiro/steering/aidlc-rules/` or `.kiro/steering/aidlc-agile-rules/`.
 
 ---
 
@@ -147,6 +219,12 @@ Or use the explicit command:
 
 ```
 /aidlc
+```
+
+For agile workflows with Vision, Epic, and Backlog management:
+
+```
+/aidlc-agile
 ```
 
 ### Kiro IDE / Kiro CLI
@@ -233,6 +311,36 @@ The workflow will automatically:
 
 ---
 
+## Commands (Claude Code - Agile Variant)
+
+### Basic Commands
+
+| Command | Description |
+|---------|-------------|
+| `/aidlc-agile` | Start or resume agile workflow |
+| `/aidlc-agile continue` | Resume from current state |
+| `/aidlc-agile status` | Show current progress |
+
+### Agile-Specific Stage Commands
+
+```
+/aidlc-agile run vision stage
+/aidlc-agile run epic stage
+/aidlc-agile backlog status
+/aidlc-agile backlog refine
+/aidlc-agile sync jira
+```
+
+### Jira Integration Commands
+
+| Command | Description |
+|---------|-------------|
+| `/aidlc-agile sync jira` | Force sync all artifacts to Jira |
+| `/aidlc-agile jira status` | Show Jira connection status |
+| `/aidlc-agile export to jira` | Export local artifacts to Jira |
+
+---
+
 ## Generated Documentation Structure
 
 Both Claude Code and Kiro generate the same documentation structure:
@@ -270,10 +378,13 @@ your-project/
 | Stage | When Executed | Purpose |
 |-------|---------------|---------|
 | Workspace Detection | Always | Detect greenfield/brownfield, resume state |
+| Vision Stage | Conditional (Agile) | Strategic intent and stakeholder alignment |
 | Reverse Engineering | Brownfield only | Document existing codebase |
 | Requirements Analysis | Always | Gather and clarify requirements |
 | User Stories | Conditional | Define user-facing features |
+| Epic Stage | Conditional (Agile) | Group stories into epics |
 | Workflow Planning | Always | Plan which stages to execute |
+| Backlog Init | Living (Agile) | Initialize product backlog |
 | Application Design | Conditional | Define components and services |
 | Units Generation | Conditional | Decompose into work units |
 
@@ -287,6 +398,15 @@ your-project/
 | Infrastructure Design | Conditional | Deployment architecture |
 | Code Generation | Always | Generate application code |
 | Build and Test | Always | Build instructions and tests |
+
+### Agile-Specific Features (aidlc-agile only)
+
+| Feature | Type | Purpose |
+|---------|------|---------|
+| Vision Stage | Conditional | Capture strategic intent for complex projects |
+| Epic Stage | Conditional | Group 5+ stories into logical epics |
+| Product Backlog | Living Artifact | Track all work items, updated at every gate |
+| Jira Integration | Optional | Sync with Jira via MCP (graceful degradation) |
 
 ---
 
