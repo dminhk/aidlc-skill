@@ -339,6 +339,33 @@ The workflow will automatically:
 | `/aidlc-agile jira status` | Show Jira connection status |
 | `/aidlc-agile export to jira` | Export local artifacts to Jira |
 
+### Atlassian MCP Configuration
+
+To enable Jira integration, add the official Atlassian MCP Server to your Claude Code MCP settings (`~/.claude/settings.json`):
+
+```json
+{
+  "mcpServers": {
+    "atlassian": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+**Requirements:**
+- Node.js v18 or higher
+- Active Atlassian Cloud site
+- Modern browser for OAuth authentication
+
+**Authentication:** On first connection, a browser window opens for Atlassian OAuth login. No API tokens needed in the configuration.
+
+**Capabilities:** The official Atlassian MCP Server provides access to Jira (search/create/update issues), Confluence (summarize/create pages), and Compass (create components).
+
+Restart Claude Code after configuration. The workflow will auto-detect Atlassian MCP and sync artifacts at approval gates. If unavailable, it gracefully continues with local markdown files only.
+
 ---
 
 ## Generated Documentation Structure

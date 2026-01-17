@@ -6,6 +6,62 @@
 
 ---
 
+## Atlassian MCP Server Setup
+
+This integration uses the **official Atlassian MCP Server**, which provides access to Jira, Confluence, and Compass through a single connection.
+
+### Prerequisites
+
+- Node.js v18 or higher
+- Active Atlassian Cloud site (Jira, Confluence, or Compass)
+- Modern browser for OAuth authentication flow
+- User must have access to required Atlassian apps
+
+### Claude Code Configuration
+
+Add to your Claude Code MCP settings (`~/.claude/settings.json` or project `.claude/settings.json`):
+
+```json
+{
+  "mcpServers": {
+    "atlassian": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+### Authentication
+
+The Atlassian MCP Server uses **OAuth 2.1 (3LO)** browser-based authentication:
+
+1. On first connection, a browser window opens for Atlassian login
+2. Authorize the MCP server to access your Atlassian products
+3. Tokens are session-based and respect your user permissions
+4. No API tokens needed in the configuration file
+
+### Capabilities
+
+The official Atlassian MCP Server provides access to:
+
+| Product | Capabilities |
+|---------|--------------|
+| **Jira** | Search issues, create issues, update issues, transitions |
+| **Confluence** | Summarize pages, create pages, query spaces |
+| **Compass** | Create components, bulk import |
+
+### Verify Installation
+
+After configuration, restart Claude Code and run:
+
+```
+/aidlc-agile jira status
+```
+
+---
+
 ## Integration Principle
 
 **Check MCP -> Log -> Continue**
