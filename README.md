@@ -1,8 +1,16 @@
 # AI-DLC (AI-Driven Development Life Cycle)
 
-A Claude Code skill that provides a structured, adaptive workflow for AI-assisted software development.
+A structured, adaptive workflow for AI-assisted software development.
 
 > **Based on**: [AI-DLC Workflows](https://github.com/awslabs/aidlc-workflows) by AWS Labs
+
+## Supported Platforms
+
+| Platform | Type | Installation |
+|----------|------|--------------|
+| [Claude Code](https://claude.ai/claude-code) | CLI | Skill (`/aidlc`) |
+| [Kiro IDE](https://kiro.dev) | IDE | Steering files |
+| [Kiro CLI](https://kiro.dev/docs/cli) | CLI | Steering files |
 
 ## Overview
 
@@ -43,11 +51,13 @@ AI-DLC guides you through a complete software development lifecycle with three p
 - **Quality Focused**: Includes NFR (non-functional requirements) analysis
 - **Full Audit Trail**: Logs all decisions and user inputs
 
+---
+
 ## Installation
 
-### Option 1: Plugin Marketplace (Recommended)
+### Claude Code
 
-Add the marketplace and install in Claude Code:
+#### Option 1: Plugin Marketplace (Recommended)
 
 ```
 /plugin marketplace add https://github.com/dminhk/aidlc-skill.git
@@ -56,39 +66,76 @@ Add the marketplace and install in Claude Code:
 
 Restart Claude Code after installation to load the skill.
 
-### Option 2: Clone Repository
+#### Option 2: Clone Repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/dminhk/aidlc-skill.git
 
-# Copy to global skills directory (available for all projects)
+# Global installation (all projects)
 cp -r aidlc-skill/aidlc ~/.claude/skills/
 
-# Or copy to project-specific location (shared via version control)
+# Or project-specific (shared via version control)
 cp -r aidlc-skill/aidlc .claude/skills/
 ```
 
-### Option 3: Download Release
+#### Verify Installation
 
-1. Download `aidlc.skill` from the [Releases](https://github.com/dminhk/aidlc-skill/releases) page
-2. Extract to your skills directory:
-   ```bash
-   unzip aidlc.skill -d ~/.claude/skills/
-   ```
-
-### Verify Installation
-
-Ask Claude Code:
 ```
 What skills are available?
 ```
 
 You should see "aidlc" listed with its description.
 
+---
+
+### Kiro IDE / Kiro CLI
+
+#### Option 1: Clone Repository
+
+```bash
+git clone https://github.com/dminhk/aidlc-skill.git
+
+# Project-specific installation
+cp -r aidlc-skill/kiro/aidlc-rules <your-project>/.kiro/steering/
+cp -r aidlc-skill/kiro/aidlc-rule-details <your-project>/.kiro/
+
+# Or global installation (all projects)
+cp -r aidlc-skill/kiro/aidlc-rules ~/.kiro/steering/
+cp -r aidlc-skill/kiro/aidlc-rule-details ~/.kiro/
+```
+
+#### Resulting Structure
+
+```
+<your-project>/
+└── .kiro/
+    ├── steering/
+    │   └── aidlc-rules/
+    │       └── core-workflow.md
+    └── aidlc-rule-details/
+        ├── common/
+        ├── inception/
+        ├── construction/
+        └── operations/
+```
+
+#### Verify Installation
+
+In Kiro CLI:
+
+```
+/context show
+```
+
+Look for entries under `.kiro/steering/aidlc-rules/`.
+
+---
+
 ## Usage
 
-Once installed, simply describe what you want to build:
+### Claude Code
+
+Simply describe what you want to build:
 
 ```
 "Build a REST API for user management"
@@ -96,16 +143,36 @@ Once installed, simply describe what you want to build:
 "Add a payment processing feature to my app"
 ```
 
-The skill will automatically:
+Or use the explicit command:
+
+```
+/aidlc
+```
+
+### Kiro IDE / Kiro CLI
+
+Start your prompt with **"Using AI-DLC, ..."**:
+
+```
+Using AI-DLC, build a REST API for user management
+Using AI-DLC, create a React dashboard with authentication
+Using AI-DLC, add a payment processing feature to my app
+```
+
+---
+
+## How It Works
+
+The workflow will automatically:
 1. Detect your workspace (new or existing project)
 2. Gather requirements through structured questions
 3. Plan the implementation workflow
 4. Guide you through design and code generation
 5. Produce build and test instructions
 
-## Explicit Stage Commands
+---
 
-You can explicitly trigger specific stages to re-run phases, force skipped stages, or generate missing documentation.
+## Commands (Claude Code)
 
 ### Basic Commands
 
@@ -116,8 +183,6 @@ You can explicitly trigger specific stages to re-run phases, force skipped stage
 | `/aidlc status` | Show current progress |
 
 ### Phase Commands
-
-Run or re-run entire phases:
 
 ```
 /aidlc run inception              # Run/re-run inception phase
@@ -152,8 +217,6 @@ Run or re-run entire phases:
 
 ### Documentation Commands
 
-Generate missing or additional documentation:
-
 ```
 /aidlc generate missing documentation
 /aidlc create construction docs
@@ -162,15 +225,17 @@ Generate missing or additional documentation:
 
 ### Control Commands
 
-Fine-tune workflow execution:
-
 | Command | Description |
 |---------|-------------|
 | `/aidlc skip [stage name]` | Skip a specific stage |
 | `/aidlc include [stage name]` | Force include a stage |
 | `/aidlc reset [phase]` | Reset phase status in state file |
 
+---
+
 ## Generated Documentation Structure
+
+Both Claude Code and Kiro generate the same documentation structure:
 
 ```
 your-project/
@@ -195,6 +260,8 @@ your-project/
     │   └── build-and-test/
     └── operations/
 ```
+
+---
 
 ## Workflow Stages
 
@@ -221,6 +288,8 @@ your-project/
 | Code Generation | Always | Generate application code |
 | Build and Test | Always | Build instructions and tests |
 
+---
+
 ## Key Principles
 
 1. **Adaptive Execution** - Only runs stages that add value
@@ -229,9 +298,7 @@ your-project/
 4. **Progress Tracking** - Resumes where you left off
 5. **Complete Audit Trail** - Logs all inputs and decisions
 
-## Requirements
-
-- [Claude Code](https://claude.ai/claude-code) CLI
+---
 
 ## License
 
